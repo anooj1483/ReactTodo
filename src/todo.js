@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Platform, ListView, Keyboard, AsyncStorage, StatusBar} from "react-native";
+import {View, Text, StyleSheet, Platform, ListView, Keyboard, AsyncStorage, StatusBar, Navigator} from "react-native";
 import Header from "./header";
 import Footer from "./footer";
 import Row from "./row";
 
-class App extends Component{
+class Todo extends Component{
     constructor(props){
         super(props);
         const ds    =   new ListView.DataSource({rowHasChanged:(r1,r2) => r1 != r2});
@@ -86,7 +86,7 @@ class App extends Component{
         return(
             <View style={styles.container}>
                 <StatusBar
-                    barSt
+                    barStyle="light-content"
                 />
                 <Header
                     value={this.state.value}
@@ -142,4 +142,4 @@ const styles =   StyleSheet.create({
         borderColor:"#795548"
     }
 })
-export default App;
+export default Todo;

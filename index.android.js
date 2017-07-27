@@ -1,7 +1,15 @@
 
 import React, { Component } from 'react';
 import {
-    AppRegistry
+    AppRegistry, View
 } from 'react-native';
-import App from "./src/app";
-AppRegistry.registerComponent('ReactToDo', () => App);
+import {StackNavigator} from "react-navigation"
+import Splash from "./src/splash"
+import Login from "./src/login"
+
+const ReactToDo = StackNavigator({
+    Splash: { screen: Splash },
+    Login: {screen:Login}
+});
+
+AppRegistry.registerComponent('ReactToDo', () => ReactToDo);
