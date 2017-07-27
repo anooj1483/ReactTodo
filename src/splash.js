@@ -24,7 +24,7 @@ class Splash extends Component{
     }
     componentDidUpdate () {
         if (this.state.timePassed) {
-            this._navigateTo('Login')
+            this._navigateTo('Todo')
         }
     }
     _navigateTo = (routeName: string) => {
