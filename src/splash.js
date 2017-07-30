@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Navigator, StatusBar, Image, Button} from "react-native";
+import {View, Text, StyleSheet, Navigator, StatusBar, Image, Button, AsyncStorage} from "react-native";
 import Todo from "./todo";
 import Login from "./login"
 import { NavigationActions } from 'react-navigation'
@@ -16,7 +16,7 @@ class Splash extends Component{
     }
 
     componentDidMount() {
-        setTimeout(() => {this.setTimePassed()}, 1000)
+        setTimeout(() => {this.setTimePassed()}, 3000)
     }
     setTimePassed() {
 
@@ -24,7 +24,21 @@ class Splash extends Component{
     }
     componentDidUpdate () {
         if (this.state.timePassed) {
-            this._navigateTo('Todo')
+            AsyncStorage.getItem("isLoggedIn").then((json) =>{
+                try{
+                    const logDetail =   JSON.parse(json);
+                    if(logDetail.isLoggedIn){
+                        this._navigateTo('Todo')
+                    }else{
+                        this._navigateTo('Login')
+                    }
+
+                }catch(e){
+                    this._navigateTo('Login')
+                }
+
+            })
+
         }
     }
     _navigateTo = (routeName: string) => {

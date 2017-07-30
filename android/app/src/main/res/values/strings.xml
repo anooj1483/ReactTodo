@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ReactToDo</string>
+    <!--<string name="facebook_app_id">106497926694494</string>-->
+    <!--<string name="fb_login_protocol_scheme">fb106497926694494</string>-->
+    <!--<string name="facebook_app_id">950110338385665</string>-->
+    <string name="facebook_app_id">106497926694494</string>
 </resources>

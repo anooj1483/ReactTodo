@@ -1,38 +1,17 @@
-//
-// import React, { Component } from 'react';
-// import {
-//   AppRegistry
-// } from 'react-native';
-// // import App from "./src/app";
-// // AppRegistry.registerComponent('ReactToDo', () => App);
-// import Splash from "./src/splash"
-// AppRegistry.registerComponent('ReactToDo', () => Splash);
-
 
 import React, { Component } from 'react';
 import {
-    AppRegistry, View, Navigator
+    AppRegistry, View
 } from 'react-native';
-
+import {StackNavigator} from "react-navigation"
 import Splash from "./src/splash"
+import Login from "./src/login"
+import Todo from "./src/todo"
 
+const ReactToDo = StackNavigator({
+    Splash: { screen: Splash },
+    Login: {screen:Login},
+    Todo:{screen:Todo}
+});
 
-export default class ReactToDo{
-    render(){
-      return(
-      <Navigator
-          initialRoute={{id:'Splash'}}
-          renderScene={this.navigationRenderScene}
-      />
-      )
-    }
-
-    navigationRenderScene(route, navigator){
-        //_navigator  =   navigator;
-        switch(route.id){
-            case "Splash":
-                return (<Splash navigator={navigator} />);
-        }
-    }
-}
 AppRegistry.registerComponent('ReactToDo', () => ReactToDo);

@@ -1,9 +1,13 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Platform, ListView, Keyboard, AsyncStorage, StatusBar, Navigator} from "react-native";
+import {View, Text, StyleSheet, Platform, ListView, Keyboard, AsyncStorage, StatusBar, Navigator, NativeModules} from "react-native";
 import Header from "./header";
 import Footer from "./footer";
 import Row from "./row";
-
+const FBSDK = require('react-native-fbsdk');
+const {
+    LoginButton,
+    AccessToken,
+} = FBSDK;
 class Todo extends Component{
     static navigationOptions = {
         header:null
@@ -15,13 +19,15 @@ class Todo extends Component{
             allComplete:false,
             value:"",
             items:[],
-            dataSource:ds.cloneWithRows([])
+            dataSource:ds.cloneWithRows([]),
+            isLoggedIn: true
         }
         this.setSource =    this.setSource.bind(this);
         this.handleAddItem =    this.handleAddItem.bind(this);
         this.handleRemoveItem =    this.handleRemoveItem.bind(this);
         this.handleToggleComplete =  this.handleToggleComplete.bind(this);
         this.handleToggleAllComplete =  this.handleToggleAllComplete.bind(this);
+        this.onSignout =  this.onSignout.bind(this);
 
     }
 
@@ -34,6 +40,19 @@ class Todo extends Component{
 
         })
     }
+
+    componentDidUpdate () {
+        if (this.state.isLoggedIn) {
+            this._navigateTo('Login')
+        }
+    }
+    _navigateTo = (routeName: string) => {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName })]
+        })
+        this.props.navigation.dispatch(resetAction)
+    };
 
     setSource(items, itemDataSource, otherState){
         this.setState({
@@ -85,6 +104,19 @@ class Todo extends Component{
         this.setSource(newItems, newItems, {value:""})
     }
 
+    onSignout(){
+        //alert("on")
+        AsyncStorage.setItem("isLoggedIn",JSON.stringify({isLoggedIn:false}))
+        this.setSource(this.state.items,this.state.items,{isLoggedIn:false});
+        //FBLoginManager.logout((error, data) => {
+        // FBLoginManager.logout((data) => {
+        //     this.setSource(this.state.items,this.state.items,{isLoggedIn:false});
+        //     AsyncStorage.setItem("isLoggedIn",JSON.stringify({isLoggedIn:false}))
+        //     this.props.onLogout()
+        // })
+
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -118,7 +150,9 @@ class Todo extends Component{
                         }}
                     />
                 </View>
-                <Footer/>
+                <Footer
+                    onSignout={this.onSignout}
+                />
 
             </View>
         );
