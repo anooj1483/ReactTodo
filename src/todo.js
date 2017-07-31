@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Platform, ListView, Keyboard, AsyncStorage, Stat
 import Header from "./header";
 import Footer from "./footer";
 import Row from "./row";
+import { NavigationActions } from 'react-navigation'
 const FBSDK = require('react-native-fbsdk');
 const {
     LoginButton,
